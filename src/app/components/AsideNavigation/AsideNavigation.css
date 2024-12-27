@@ -1,0 +1,13 @@
+.aside-navigation {
+    max-width: 16%;
+}
+.aside-site-title {
+    margin: 0;
+}
+.list-group-item {
+    border-right: none;
+    border-left: none;
+}
+.under-list-group {
+    padding: 10px 0;
+}
