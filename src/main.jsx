@@ -8,6 +8,8 @@ import App from './app/App.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <main className="container p-4">
+        <App />
+    </main>
   </StrictMode>
 )

@@ -1,35 +1,107 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default class App extends React.Component {
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    constructor(props) {
+        super(props);
+        this.state = {
+            taskId: 0,
+            tasks: [],
+        };
+    }
+
+    render() {
+
+        const onSubmitHandler = (e) => {
+            e.preventDefault();
+
+            this.setState({taskId: ++this.state.taskId});
+            const newArr = [...this.state.tasks];
+
+            const todoWrapper = e.target
+            const title = todoWrapper.querySelector('[data-todo-title]').value;
+            const description = todoWrapper.querySelector('[data-todo-description]').value;
+
+            newArr.push({
+                id: this.state.taskId,
+                title: title,
+                description: description,
+                isTaskFinished: false,
+            });
+
+            this.setState({tasks: newArr});
+            console.log(this.state.tasks);
+
+            todoWrapper.reset()
+        }
+        const onChangeStatusHandler = ({ target }) => {
+            const id = target.closest('.card').getAttribute('data-todo-item-id');
+
+            const newArr = [...this.state.tasks];
+
+            const currentItem = newArr[id - 1];
+            currentItem.isTaskFinished = !currentItem.isTaskFinished;
+
+            this.setState({tasks: newArr});
+        }
+
+        const onDeleteItemHandler = ({ target }) => {
+            const id = Number(target.closest('.card').getAttribute('data-todo-item-id'));
+            const currentItemId = this.state.tasks.findIndex(task => task.id === id);
+
+            const newArr = [...this.state.tasks];
+            newArr.splice(currentItemId, 1);
+
+            this.setState({tasks: newArr});
+        }
+
+        return (
+            <>
+                <div className="row-cols-lg-5 mb-4 d-flex align-items-stretch gap-4 flex-wrap">
+                    {this.state.tasks.length > 0 && this.state.tasks.reverse().map((task) => {
+                        const {id, title, description, isTaskFinished} = task;
+
+                        return (
+                            <div data-todo-item-id={id} className={`card col relative border ${isTaskFinished ? 'border-success' : 'border-danger'}`} key={id}>
+                                <div className='card-body d-flex flex-column justify-content-between'>
+                                    <h5 className="card-title fw-bold fs-4">{title} | #{id}</h5>
+                                    <hr/>
+                                    <p className="card-text fs-5">{description}</p>
+                                    <span role="button"
+                                          className="position-absolute top-0 start-100 translate-middle fs-5"
+                                          onClick={onChangeStatusHandler}>
+                                        {isTaskFinished ? '✅' : '❌'}
+                                    </span>
+                                    <button onClick={onDeleteItemHandler} type="button" className="btn btn-outline-danger">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16">
+                                            <path
+                                                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
+                <hr/>
+                <form onSubmit={onSubmitHandler}>
+                    <div className="form-floating mb-3">
+                        <input required data-todo-title='' type="text" className="form-control" id="floatingInput"
+                               placeholder="name@example.com"/>
+                        <label htmlFor="floatingInput">Title for your task (required field)</label>
+                    </div>
+                    <div className="form-floating">
+                        <textarea data-todo-description='' className="form-control" placeholder="Leave a comment here"
+                                  id="floatingTextarea2"
+                                  style={{height: '100px'}}></textarea>
+                        <label htmlFor="floatingTextarea2">Description for your Task (optional)</label>
+                    </div>
+                    <button type="submit" className="btn btn-primary mt-2">Create task</button>
+                </form>
+            </>
+        )
+    }
 }
 
-export default App
+
