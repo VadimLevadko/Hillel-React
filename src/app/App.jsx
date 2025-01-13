@@ -45,11 +45,13 @@ export default class App extends React.Component {
         }
 
         const onDeleteItemHandler = ({ target }) => {
-            const id = getParentAttr(target, '.card', 'data-todo-item-id');
+            const id = Number(getParentAttr(target, '.card', 'data-todo-item-id'));
             const currentItemId = this.state.tasks.findIndex(task => task.id === id);
 
             const newArr = copyArr(this.state.tasks);
             newArr.splice(currentItemId, 1);
+
+            console.log(id)
 
             return this.setState({tasks: newArr});
         }
