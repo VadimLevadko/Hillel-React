@@ -1,58 +1,57 @@
 import React from 'react';
+import { getParentAttr, copyArr } from './commonFunc.js'
 
 export default class App extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            taskId: 0,
             tasks: [],
         };
     }
 
     render() {
-
         const onSubmitHandler = (e) => {
             e.preventDefault();
 
-            this.setState({taskId: ++this.state.taskId});
-            const newArr = [...this.state.tasks];
+            const newArr = copyArr(this.state.tasks);
+            const lastChildId = newArr[newArr.length - 1];
 
             const todoWrapper = e.target
             const title = todoWrapper.querySelector('[data-todo-title]').value;
             const description = todoWrapper.querySelector('[data-todo-description]').value;
 
             newArr.push({
-                id: this.state.taskId,
+                id: lastChildId ? lastChildId.id + 1 : 1,
                 title: title,
                 description: description,
                 isTaskFinished: false,
             });
 
             this.setState({tasks: newArr});
-            console.log(this.state.tasks);
 
-            todoWrapper.reset()
+            return todoWrapper.reset()
         }
-        const onChangeStatusHandler = ({ target }) => {
-            const id = target.closest('.card').getAttribute('data-todo-item-id');
 
-            const newArr = [...this.state.tasks];
+        const onChangeStatusHandler = ({ target }) => {
+            const id = getParentAttr(target, '.card', 'data-todo-item-id');
+
+            const newArr = copyArr(this.state.tasks);
 
             const currentItem = newArr[id - 1];
             currentItem.isTaskFinished = !currentItem.isTaskFinished;
 
-            this.setState({tasks: newArr});
+            return this.setState({tasks: newArr});
         }
 
         const onDeleteItemHandler = ({ target }) => {
-            const id = Number(target.closest('.card').getAttribute('data-todo-item-id'));
+            const id = getParentAttr(target, '.card', 'data-todo-item-id');
             const currentItemId = this.state.tasks.findIndex(task => task.id === id);
 
-            const newArr = [...this.state.tasks];
+            const newArr = copyArr(this.state.tasks);
             newArr.splice(currentItemId, 1);
 
-            this.setState({tasks: newArr});
+            return this.setState({tasks: newArr});
         }
 
         return (
