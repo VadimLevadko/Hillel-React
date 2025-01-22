@@ -1,13 +1,9 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import ContactSection from './app/components/ContactSection/ContactSection.jsx'
 
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/js/index.esm.js';
-
-import App from './app/App.jsx'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
+    <ContactSection />
 )
