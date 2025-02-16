@@ -1,0 +1,37 @@
+@import "../../variables.module.scss";
+
+.azm-navbar .nav-link {
+    font-size: 1.15rem;
+}
+.azm-navbar .dropdown-menu {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+.navbar-toggler {
+    border: none !important;
+}
+.azm-navbar .navbar-toggler:focus {
+    background: none;
+    outline: 0;
+    box-shadow: none;
+}
+.azm-navbar .navbar-toggler span {
+    display: block;
+    width: 30px;
+    height: 2px;
+    margin: 6px auto;
+    background: #6633CC;
+    transition: all .6s cubic-bezier(0.250, 0.100, 0.250, 1.000);
+}
+.azm-navbar .navbar-toggler[aria-expanded="true"] span:first-of-type {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+.azm-navbar .navbar-toggler[aria-expanded="true"] span:nth-of-type(2) {
+    opacity: 0;
+}
+.azm-navbar .navbar-toggler[aria-expanded="true"] span:last-of-type {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+.azm-navbar .navbar-toggler[aria-expanded="false"] span {
+    transform: none;
+    opacity: 1;
+}

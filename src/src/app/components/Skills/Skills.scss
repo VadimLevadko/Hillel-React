@@ -1,0 +1,12 @@
+@import "../../variables.module";
+
+.skills-section {
+  .skill-item {
+    .progress {
+      background-color: $light-purple;
+      .progress-bar {
+        background-color: $dark-purple;
+      }
+    }
+  }
+}
