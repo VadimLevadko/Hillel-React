@@ -1,0 +1,17 @@
+.new-todo-form {
+  label {
+    @apply block
+  }
+  input {
+    &:focus {
+      outline: none;
+    }
+  }
+  select {
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

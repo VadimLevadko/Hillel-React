@@ -1,0 +1,67 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Доробити UI",
+      "status": "нове",
+      "description": "Потрібно закінчити верстку",
+      "priority": "high"
+    },
+    {
+      "id": "2",
+      "title": "Додати API",
+      "status": "в роботі",
+      "description": "Підключити бекенд",
+      "priority": "medium"
+    },
+    {
+      "id": "8f63",
+      "title": "Hello World",
+      "status": "new",
+      "description": "some description",
+      "priority": "medium"
+    },
+    {
+      "id": "b2ab",
+      "title": "Hello World",
+      "status": "new",
+      "description": "some description",
+      "priority": "medium"
+    },
+    {
+      "id": "5f63",
+      "title": "Hello World",
+      "status": "new",
+      "description": "some description",
+      "priority": "medium"
+    },
+    {
+      "id": "454b",
+      "title": "Hello World",
+      "status": "new",
+      "description": "some description",
+      "priority": "medium"
+    },
+    {
+      "id": "98ec",
+      "title": "Hello World",
+      "status": "new",
+      "description": "some description",
+      "priority": "medium"
+    },
+    {
+      "id": "f8a2",
+      "title": "Hello World",
+      "status": "new",
+      "description": "some description",
+      "priority": "medium"
+    },
+    {
+      "id": "537f",
+      "title": "Hello World",
+      "status": "new",
+      "description": "some description",
+      "priority": "medium"
+    }
+  ]
+}
