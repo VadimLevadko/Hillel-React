@@ -13,8 +13,7 @@ import { TodoItemType } from "../../utils/schemaTypes";
 export default function TodoSection() {
     const dispatch = useDispatch<any>();
     const filteredTodos = useSelector(selectVisibleTodos)
-    console.log(filteredTodos)
-    const { entities: todoList, loading, error } = filteredTodos || {};
+    const { entities: todoList, loading } = filteredTodos || {};
 
     useEffect(() => {
         dispatch(loadTodos())
