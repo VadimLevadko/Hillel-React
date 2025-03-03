@@ -1,31 +1,46 @@
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { selectStatusForm, toggleForm } from '../../../features/CreateTaskButton/toggle-form-slice'
+import { selectStatusForm, toggleVisibility, selectTaskId } from '../../../features/CreateTaskButton/toggle-form-slice'
+import { selectAllTodos, editTodo } from '../../../features/Todos/todos-slice'
 import { createTodo } from '../../../features/Todos/todos-slice.js'
 import { newTodoSchema } from '../../../utils/schemaValidation.js'
+
+import type { TodoItemType } from '../../../utils/schemaTypes'
+import { Dispatch } from "@reduxjs/toolkit";
 
 import { IoAlertCircleOutline } from "react-icons/io5";
 import { MdClose } from "react-icons/md";
 
-const handleCloseForm = (dispatch) => {
-    return dispatch(toggleForm());
+const handleCloseForm = (dispatch: Dispatch) => {
+    return dispatch(toggleVisibility());
 }
 
-export default function NewTodo() {
+export default function TaskHandler() {
     const dispatch = useDispatch();
-    const isHidden = useSelector(selectStatusForm);
+
+    const { isHidden, isEditMode } = useSelector(selectStatusForm);
+    const taskId = useSelector(selectTaskId);
+
+    const todos = useSelector(selectAllTodos);
+    const currentTaskEdit = todos.entities.find((item: TodoItemType) => item.id === taskId)
 
     const { values, handleChange, handleSubmit, errors, touched } = useFormik({
+        enableReinitialize: true,
         initialValues: {
-            title: "",
-            description: "",
-            status: "New",
-            priority: "Low",
+            title: isEditMode ? currentTaskEdit.title : "",
+            description: isEditMode ? currentTaskEdit.description : "",
+            status: isEditMode ? currentTaskEdit.status : "New",
+            priority: isEditMode ? currentTaskEdit.priority : "Low",
         },
         validationSchema: newTodoSchema,
         onSubmit: function (values, action) {
-            // @ts-ignore
-            dispatch(createTodo(values))
+            if(isEditMode) {
+                // @ts-ignore
+                dispatch(editTodo({id: taskId, ...values}))
+            } else {
+                // @ts-ignore
+                dispatch(createTodo(values))
+            }
             handleCloseForm(dispatch)
             action.resetForm()
         },
@@ -38,7 +53,9 @@ export default function NewTodo() {
                 <span onClick={() => handleCloseForm(dispatch)} className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors cursor-pointer">
                     {<MdClose size={30} />}
                 </span>
-                <h2 className="new-task-title">New Task</h2>
+                <h2 className="new-task-title">
+                    {isEditMode ? "Edit Task" : "New Task"}
+                </h2>
                 <div className="mb-[14px]">
                     <input
                         className={`${!!errors.title ? "border-red-500" : ""}`}
@@ -71,7 +88,9 @@ export default function NewTodo() {
                         <select id="status" onChange={handleChange} value={values.status}>
                             <option value="New">New</option>
                             <option value="In progress">In progress</option>
-                            <option value="Completed">Completed</option>
+                            {isEditMode && (
+                                <option value="Completed">Completed</option>
+                            )}
                         </select>
                     </div>
                     <div className="flex-1">
@@ -84,7 +103,9 @@ export default function NewTodo() {
                     </div>
                 </div>
                 <div className="mt-6 text-center">
-                    <button type="submit">Create task</button>
+                    <button type="submit">
+                        {isEditMode ? "Edit this task" : "Create Task"}
+                    </button>
                 </div>
             </form>
         </div>

@@ -15,25 +15,18 @@
       "priority": "Medium"
     },
     {
-      "id": "f4d3",
-      "title": "Попілисосить хату",
-      "description": "Треба це зробити",
+      "id": "7b47",
+      "title": "Перевірити додавання задач",
+      "description": "",
       "status": "New",
       "priority": "High"
     },
     {
-      "id": "7ad3",
-      "title": "Do this home work",
-      "description": "fsafsafasfsafasf\nfsafsafafs",
-      "status": "In progress",
-      "priority": "Medium"
-    },
-    {
-      "id": "6c87",
-      "title": "fsa",
-      "description": "fasfasf",
-      "status": "New",
-      "priority": "Low"
+      "title": "Перевірити видалення задач",
+      "description": "Якась помилка при видаленні була",
+      "status": "Completed",
+      "priority": "Medium",
+      "id": "b88c"
     }
   ]
 }

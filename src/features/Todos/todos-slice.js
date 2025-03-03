@@ -20,12 +20,24 @@ export const deleteTodo = createAsyncThunk(
     }
 )
 
-// export const editTodo = createAsyncThunk(
-//     'todo/edit-todo',
-//     async (todos, { id, title, description, status, priority }) => {
-//
-//     }
-// )
+export const editTodo = createAsyncThunk(
+    'todo/edit-todo',
+    async ({ id, title, description, status, priority }) => {
+        const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                title,
+                description,
+                status,
+                priority
+            })
+        })
+        return await res.json();
+    }
+)
 
 export const createTodo = createAsyncThunk(
     'todos/create-todo',
@@ -87,9 +99,13 @@ const todoSlice = createSlice({
                 state.entities.push(...action.payload);
                 state.loading = 'idle';
             })
+            .addCase(editTodo.fulfilled, (state, action) => {
+                const taskIndex = state.entities.findIndex(task => task.id === action.payload.id);
+                state.entities[taskIndex] = action.payload;
+            })
     }
 })
 
 export const todoReducer = todoSlice.reducer
 
-export const selectUsers = (state) => state.todos;
+export const selectAllTodos = (state) => state.todos;

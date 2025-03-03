@@ -1,5 +1,7 @@
 import { useDispatch } from "react-redux";
 import { deleteTodo } from './todos-slice'
+import { toggleMode, setTaskId } from '../CreateTaskButton/toggle-form-slice'
+import { Dispatch } from "@reduxjs/toolkit";
 
 import { FcHighPriority } from "react-icons/fc";
 import { FcMediumPriority } from "react-icons/fc";
@@ -29,9 +31,14 @@ const priorityColors = {
     }
 };
 
-const handleDelete = (dispatch: any, id: string) => {
+const handleDelete = (dispatch: Dispatch, id: string) => {
     // @ts-ignore
     dispatch(deleteTodo(id))
+}
+
+const handleEdit = (dispatch: Dispatch, id: string) => {
+    dispatch(toggleMode(true));
+    dispatch(setTaskId(id))
 }
 
 export default function TodoItem({ content }) {
@@ -41,7 +48,7 @@ export default function TodoItem({ content }) {
     const PriorityIcon = priorityColors[priority].icon;
 
     return (
-        <div className="mb-4 p-4 bg-white rounded-lg todo-item-shadow">
+        <div className="todo-item mb-4 p-4 bg-white rounded-lg todo-item-shadow">
             <div className="py-2 flex justify-between">
                 <span className={`px-3 py-1 text-sm font-medium rounded-lg ${statusColors[status]}`}>
                     {status}
@@ -56,10 +63,10 @@ export default function TodoItem({ content }) {
                 <p>{description}</p>
             )}
             <div className="flex gap-2 justify-end mt-3">
-                <button onClick={() => handleDelete(dispatch, id)} className="flex items-center gap-1 cursor-pointer px-3 py-1 bg-red-500 text-white text-sm rounded-lg shadow hover:bg-red-600">
+                <button onClick={() => handleDelete(dispatch, id)} className="bg-red-500 hover:bg-red-600">
                     {<FaRegTrashCan />} Delete
                 </button>
-                <button className="flex items-center gap-1 cursor-pointer px-3 py-1 bg-gray-500 text-white text-sm rounded-lg shadow hover:bg-gray-600">
+                <button onClick={() => handleEdit(dispatch, id)} className="bg-gray-500 hover:bg-gray-600">
                     {<FaRegEdit />} Edit
                 </button>
             </div>
