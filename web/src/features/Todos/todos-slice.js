@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const loadTodos = createAsyncThunk(
     'todo/load-all-todos',
@@ -8,9 +8,28 @@ export const loadTodos = createAsyncThunk(
     }
 )
 
+export const deleteTodo = createAsyncThunk(
+    'todo/delete-todo',
+    async (id) => {
+        const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+            method: 'DELETE',
+        });
+        await res.json()
+
+        return id;
+    }
+)
+
+// export const editTodo = createAsyncThunk(
+//     'todo/edit-todo',
+//     async (todos, { id, title, description, status, priority }) => {
+//
+//     }
+// )
+
 export const createTodo = createAsyncThunk(
     'todos/create-todo',
-    async (title) => {
+    async ({title, description, status, priority}) => {
         const res = await fetch('http://localhost:5000/tasks', {
             method: 'POST',
             headers: {
@@ -18,9 +37,9 @@ export const createTodo = createAsyncThunk(
             },
             body: JSON.stringify({
                 title,
-                status: 'new',
-                description: 'some description',
-                priority: "medium"
+                description,
+                status,
+                priority
             })
         })
         return await res.json();
@@ -53,6 +72,9 @@ const todoSlice = createSlice({
                 state.entities.push(action.payload);
                 state.loading = 'idle';
             })
+            .addCase(deleteTodo.fulfilled, (state, action) => {
+                state.entities = state.entities.filter(todo => todo.id !== action.payload);
+            })
             .addCase(loadTodos.pending, (state, action) => {
                 state.loading = 'loading';
                 state.error = null;
@@ -68,7 +90,6 @@ const todoSlice = createSlice({
     }
 })
 
-export const { addUser } = todoSlice.actions;
 export const todoReducer = todoSlice.reducer
 
 export const selectUsers = (state) => state.todos;

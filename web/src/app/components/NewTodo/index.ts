@@ -1,1 +1,1 @@
-export { default } from './NewTodo.jsx'
+export { default } from './NewTodo.js'

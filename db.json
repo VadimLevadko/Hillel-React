@@ -3,65 +3,30 @@
     {
       "id": "1",
       "title": "Доробити UI",
-      "status": "нове",
+      "status": "New",
       "description": "Потрібно закінчити верстку",
-      "priority": "high"
+      "priority": "High"
     },
     {
       "id": "2",
       "title": "Додати API",
-      "status": "в роботі",
+      "status": "In progress",
       "description": "Підключити бекенд",
-      "priority": "medium"
+      "priority": "Medium"
     },
     {
-      "id": "8f63",
-      "title": "Hello World",
-      "status": "new",
-      "description": "some description",
-      "priority": "medium"
+      "id": "f4d3",
+      "title": "Попілисосить хату",
+      "description": "Треба це зробити",
+      "status": "New",
+      "priority": "High"
     },
     {
-      "id": "b2ab",
-      "title": "Hello World",
-      "status": "new",
-      "description": "some description",
-      "priority": "medium"
-    },
-    {
-      "id": "5f63",
-      "title": "Hello World",
-      "status": "new",
-      "description": "some description",
-      "priority": "medium"
-    },
-    {
-      "id": "454b",
-      "title": "Hello World",
-      "status": "new",
-      "description": "some description",
-      "priority": "medium"
-    },
-    {
-      "id": "98ec",
-      "title": "Hello World",
-      "status": "new",
-      "description": "some description",
-      "priority": "medium"
-    },
-    {
-      "id": "f8a2",
-      "title": "Hello World",
-      "status": "new",
-      "description": "some description",
-      "priority": "medium"
-    },
-    {
-      "id": "537f",
-      "title": "Hello World",
-      "status": "new",
-      "description": "some description",
-      "priority": "medium"
+      "id": "7ad3",
+      "title": "Do this home work",
+      "description": "fsafsafasfsafasf\nfsafsafafs",
+      "status": "In progress",
+      "priority": "Medium"
     }
   ]
 }
