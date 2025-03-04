@@ -1,4 +1,5 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
+import type { TodoItemType, StoreType } from "@utils/schemaTypes"
 
 const filterSlice = createSlice({
     name: "filter",
@@ -13,8 +14,9 @@ const filterSlice = createSlice({
 export const filterReducer = filterSlice.reducer;
 export const { setFilter } = filterSlice.actions;
 
-const selectTodos = (state) => state.todos;
-export const selectCurrentFilter = (state) => state.filter;
+const selectTodos = (state: StoreType) => state.todos;
+export const selectCurrentFilter = (state: StoreType) => state.filter;
+
 export const selectVisibleTodos = createSelector(
     [selectTodos, selectCurrentFilter],
     (todos, filter) => {
@@ -25,19 +27,19 @@ export const selectVisibleTodos = createSelector(
             case "New":
                 return {
                     ...todos,
-                    entities: todos.entities.filter((todo) => todo.status === "New"),
+                    entities: todos.entities.filter((todo: TodoItemType) => todo.status === "New"),
                 };
 
             case "In progress":
                 return {
                     ...todos,
-                    entities: todos.entities.filter((todo) => todo.status === "In progress"),
+                    entities: todos.entities.filter((todo: TodoItemType) => todo.status === "In progress"),
                 }
 
             case "Completed":
                 return {
                     ...todos,
-                    entities: todos.entities.filter((todo) => todo.status === "Completed"),
+                    entities: todos.entities.filter((todo: TodoItemType) => todo.status === "Completed"),
                 };
 
             default:

@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@utils/*": ["src/utils/*"],
+      "@features/*": ["src/features/*"],
+      "@components/*": ["src/app/components/*"]
+    },
+    "jsx": "react-jsx",
+    "lib": ["dom", "dom.iterable", "esnext"]
+  }
+}

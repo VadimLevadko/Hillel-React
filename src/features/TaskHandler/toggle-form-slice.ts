@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import type { StoreType } from "@utils/schemaTypes"
 
 const toggleFormSlice = createSlice({
     name: 'formToggle',
@@ -24,5 +25,5 @@ const toggleFormSlice = createSlice({
 export const toggleFormReducer = toggleFormSlice.reducer;
 export const { toggleMode, toggleVisibility, setTaskId } = toggleFormSlice.actions
 
-export const selectStatusForm = (state) => state.toggleForm;
-export const selectTaskId = (state) => state.toggleForm.taskId;
+export const selectStatusForm = (state: StoreType) => state.toggleForm;
+export const selectTaskId = (state: StoreType) => state.toggleForm.taskId;

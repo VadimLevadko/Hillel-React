@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { deleteTodo } from './todos-slice'
-import { toggleMode, setTaskId } from '../CreateTaskButton/toggle-form-slice'
+import { toggleMode, setTaskId } from '@features/TaskHandler/toggle-form-slice'
 import { Dispatch } from "@reduxjs/toolkit";
 
 import { FcHighPriority } from "react-icons/fc";
@@ -48,7 +48,7 @@ export default function TodoItem({ content }) {
     const PriorityIcon = priorityColors[priority].icon;
 
     return (
-        <div className="todo-item mb-4 p-4 bg-white rounded-lg todo-item-shadow">
+        <div className="todo-item p-4 bg-white rounded-lg todo-item-shadow">
             <div className="py-2 flex justify-between">
                 <span className={`px-3 py-1 text-sm font-medium rounded-lg ${statusColors[status]}`}>
                     {status}

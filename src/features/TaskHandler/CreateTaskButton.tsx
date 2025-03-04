@@ -11,7 +11,7 @@ export default function CreateTaskButton() {
             <button
                 onClick={() => dispatch(toggleMode(false))}
                 className="fixed flex justify-center items-center bottom-[20px] right-[40px] cursor-pointer w-[40px] h-[40px] bg-green-600/75 rounded z-[1]">
-                <FaPlus fill="#FFF" />
+                <FaPlus className="text-white" />
             </button>
         </>
     )

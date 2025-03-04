@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { TodoItemType, StoreType } from "@utils/schemaTypes"
 
 export const loadTodos = createAsyncThunk(
     'todo/load-all-todos',
@@ -8,7 +9,7 @@ export const loadTodos = createAsyncThunk(
     }
 )
 
-export const deleteTodo = createAsyncThunk(
+export const deleteTodo = createAsyncThunk<string, string>(
     'todo/delete-todo',
     async (id) => {
         const res = await fetch(`http://localhost:5000/tasks/${id}`, {
@@ -22,7 +23,7 @@ export const deleteTodo = createAsyncThunk(
 
 export const editTodo = createAsyncThunk(
     'todo/edit-todo',
-    async ({ id, title, description, status, priority }) => {
+    async ({ id, title, description, status, priority }: TodoItemType) => {
         const res = await fetch(`http://localhost:5000/tasks/${id}`, {
             method: 'PUT',
             headers: {
@@ -41,7 +42,7 @@ export const editTodo = createAsyncThunk(
 
 export const createTodo = createAsyncThunk(
     'todos/create-todo',
-    async ({title, description, status, priority}) => {
+    async ({ title, description, status, priority }: TodoItemType) => {
         const res = await fetch('http://localhost:5000/tasks', {
             method: 'POST',
             headers: {
@@ -72,35 +73,35 @@ const todoSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(createTodo.pending, (state, action) => {
+            .addCase(createTodo.pending, (state) => {
                 state.loading = 'loading';
                 state.error = null;
             })
             .addCase(createTodo.rejected, (state) => {
                 state.loading = 'idle';
-                state.error = 'Something went wrong!';
+                state.error = 'You can\'t create a task when the server is offline. Try again using "npm run start"';
             })
             .addCase(createTodo.fulfilled, (state, action) => {
                 state.entities.push(action.payload);
                 state.loading = 'idle';
             })
             .addCase(deleteTodo.fulfilled, (state, action) => {
-                state.entities = state.entities.filter(todo => todo.id !== action.payload);
+                state.entities = state.entities.filter((todo: TodoItemType) => todo.id !== action.payload);
             })
-            .addCase(loadTodos.pending, (state, action) => {
+            .addCase(loadTodos.pending, (state) => {
                 state.loading = 'loading';
                 state.error = null;
             })
             .addCase(loadTodos.rejected, (state) => {
                 state.loading = 'idle';
-                state.error = 'Something went wrong!';
+                state.error = `The server is not running, try again with "npm run start"`;
             })
             .addCase(loadTodos.fulfilled, (state, action) => {
                 state.entities.push(...action.payload);
                 state.loading = 'idle';
             })
             .addCase(editTodo.fulfilled, (state, action) => {
-                const taskIndex = state.entities.findIndex(task => task.id === action.payload.id);
+                const taskIndex = state.entities.findIndex((task: TodoItemType) => task.id === action.payload.id);
                 state.entities[taskIndex] = action.payload;
             })
     }
@@ -108,4 +109,4 @@ const todoSlice = createSlice({
 
 export const todoReducer = todoSlice.reducer
 
-export const selectAllTodos = (state) => state.todos;
+export const selectAllTodos = (state: StoreType) => state.todos;

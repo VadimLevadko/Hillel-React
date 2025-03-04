@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { toggleMode } from '../../../features/CreateTaskButton/toggle-form-slice'
+import { toggleMode } from '@features/TaskHandler/toggle-form-slice'
 
 export default function Header() {
     const dispatch = useDispatch();

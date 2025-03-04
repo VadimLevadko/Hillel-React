@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { todoReducer } from './Todos/todos-slice.js'
-import { toggleFormReducer } from './CreateTaskButton/toggle-form-slice.js'
-import { filterReducer } from './Filtres/filter-slice.js'
+import { todoReducer } from './Todos/todos-slice.ts'
+import { toggleFormReducer } from './TaskHandler/toggle-form-slice.ts'
+import { filterReducer } from './Filtres/filter-slice.ts'
 
 export const store = configureStore({
     reducer: {

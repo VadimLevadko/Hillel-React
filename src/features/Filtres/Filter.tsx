@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { selectCurrentFilter } from './filter-slice'
+import { selectCurrentFilter, setFilter } from './filter-slice'
 import { Dispatch } from "@reduxjs/toolkit";
-import { setFilter } from './filter-slice'
 
 import { LuBadgeCheck, LuCircleCheckBig } from "react-icons/lu";
 import { FaRegCircle, FaRegClock } from "react-icons/fa";
@@ -17,7 +16,7 @@ export default function Filter() {
     return (
         <div className="filter-wrapper py-[20px]">
             <h3 className="text-lg font-semibold text-gray-700">Filter by status:</h3>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center flex-wrap gap-2">
                 <button onClick={() => handleSetFilter("All", dispatch)} className={`hover:bg-blue-200 ${selectedStatus === "All" ? "active-filter" : ""}`}>
                     {<LuBadgeCheck />} All
                 </button>

@@ -2,10 +2,10 @@ import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { store } from './features/store.js'
 
-import Header from './app/components/Header'
-import TodoSection from "./features/Todos/TodoSection.tsx";
-import CreateTaskButton from './features/CreateTaskButton'
-import TaskHandler from './app/components/TaskHandler'
+import Header from '@components/Header'
+import TodoSection from "@features/Todos";
+import CreateTaskButton from '@features/TaskHandler/CreateTaskButton'
+import TaskHandler from '@features/TaskHandler/TaskHandler'
 
 import './globals.css'
 

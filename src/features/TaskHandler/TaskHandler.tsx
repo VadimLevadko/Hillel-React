@@ -1,11 +1,11 @@
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { selectStatusForm, toggleVisibility, selectTaskId } from '../../../features/CreateTaskButton/toggle-form-slice'
-import { selectAllTodos, editTodo } from '../../../features/Todos/todos-slice'
-import { createTodo } from '../../../features/Todos/todos-slice.js'
-import { newTodoSchema } from '../../../utils/schemaValidation.js'
+import { selectStatusForm, toggleVisibility, selectTaskId } from '@features/TaskHandler/toggle-form-slice'
+import { selectAllTodos, editTodo } from '@features/Todos/todos-slice'
+import { createTodo } from '@features/Todos/todos-slice'
+import { newTodoSchema } from '@utils/schemaValidation'
 
-import type { TodoItemType } from '../../../utils/schemaTypes'
+import type { TodoItemType } from '@utils/schemaTypes'
 import { Dispatch } from "@reduxjs/toolkit";
 
 import { IoAlertCircleOutline } from "react-icons/io5";
@@ -15,10 +15,15 @@ const handleCloseForm = (dispatch: Dispatch) => {
     return dispatch(toggleVisibility());
 }
 
+type statusFormType = {
+    isHidden: boolean;
+    isEditMode: boolean;
+}
+
 export default function TaskHandler() {
     const dispatch = useDispatch();
 
-    const { isHidden, isEditMode } = useSelector(selectStatusForm);
+    const { isHidden, isEditMode }: statusFormType = useSelector(selectStatusForm);
     const taskId = useSelector(selectTaskId);
 
     const todos = useSelector(selectAllTodos);
@@ -35,8 +40,10 @@ export default function TaskHandler() {
         validationSchema: newTodoSchema,
         onSubmit: function (values, action) {
             if(isEditMode) {
-                // @ts-ignore
-                dispatch(editTodo({id: taskId, ...values}))
+                if(JSON.stringify(currentTaskEdit) !== JSON.stringify({...values, id: taskId})) {
+                    // @ts-ignore
+                    dispatch(editTodo({id: taskId, ...values}))
+                }
             } else {
                 // @ts-ignore
                 dispatch(createTodo(values))

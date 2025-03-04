@@ -1,32 +1,39 @@
 {
   "tasks": [
     {
-      "id": "1",
       "title": "Доробити UI",
-      "status": "New",
       "description": "Потрібно закінчити верстку",
-      "priority": "High"
+      "status": "New",
+      "priority": "High",
+      "id": "1"
     },
     {
-      "id": "2",
       "title": "Додати API",
-      "status": "In progress",
       "description": "Підключити бекенд",
-      "priority": "Medium"
+      "status": "In progress",
+      "priority": "Medium",
+      "id": "2"
     },
     {
-      "id": "7b47",
       "title": "Перевірити додавання задач",
       "description": "",
       "status": "New",
-      "priority": "High"
+      "priority": "High",
+      "id": "7b47"
     },
     {
       "title": "Перевірити видалення задач",
-      "description": "Якась помилка при видаленні була",
+      "description": "Вже немає",
       "status": "Completed",
-      "priority": "Medium",
+      "priority": "Low",
       "id": "b88c"
+    },
+    {
+      "title": "Перевірити створення після TypeScript",
+      "description": "Поміняв на розширення .ts тепер перевіряємо чи все працює",
+      "status": "Completed",
+      "priority": "Low",
+      "id": "265f"
     }
   ]
 }
