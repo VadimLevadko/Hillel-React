@@ -32,10 +32,10 @@ export default function TaskHandler() {
     const { values, handleChange, handleSubmit, errors, touched } = useFormik({
         enableReinitialize: true,
         initialValues: {
-            title: isEditMode ? currentTaskEdit.title : "",
-            description: isEditMode ? currentTaskEdit.description : "",
-            status: isEditMode ? currentTaskEdit.status : "New",
-            priority: isEditMode ? currentTaskEdit.priority : "Low",
+            title: isEditMode && currentTaskEdit?.title || "",
+            description: isEditMode && currentTaskEdit?.description || "",
+            status: isEditMode && currentTaskEdit?.status || "New",
+            priority: isEditMode && currentTaskEdit?.priority || "Low",
         },
         validationSchema: newTodoSchema,
         onSubmit: function (values, action) {
@@ -65,7 +65,7 @@ export default function TaskHandler() {
                 </h2>
                 <div className="mb-[14px]">
                     <input
-                        className={`${!!errors.title ? "border-red-500" : ""}`}
+                        className={`${!!errors.title ? "input-border-error" : ""}`}
                         id="title"
                         type="text"
                         placeholder="Task Title..."

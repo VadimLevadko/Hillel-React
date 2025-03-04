@@ -66,11 +66,7 @@ const todoSlice = createSlice({
         loading: 'idle',
         error: null,
     },
-    reducers: {
-        addUser: (state, action) => {
-            state.entities.push(action.payload);
-        }
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(createTodo.pending, (state) => {

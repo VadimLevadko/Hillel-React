@@ -6,6 +6,7 @@ import { selectVisibleTodos } from '@features/Filtres/filter-slice'
 import Loading from "@components/Loading"
 import TodoItem from './TodoItem'
 import Filter from '@features/Filtres/Filter'
+import EmptyTaskList from "@components/EmptyTaskList";
 import ServerError from "@components/ServerError";
 
 import { LiaClipboardListSolid } from "react-icons/lia";
@@ -26,20 +27,25 @@ export default function TodoSection() {
     }
 
     return (
-        <section>
+        <section className="todo-section">
             <div className="max-w-[1240px] mx-auto py-[40px] px-[20px]">
                 <h2 className="text-3xl font-bold flex items-center justify-center gap-1 mb-[10px] text-gray-700">
                     {<LiaClipboardListSolid/>} Task List
                 </h2>
+                {!error && (
+                    <Filter />
+                )}
                 {!!todoList.length && (
                     <>
-                        <Filter />
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                             {todoList.map((todo: TodoItemType) => {
                                 return <TodoItem content={todo} key={todo.id}/>
                             })}
                         </div>
                     </>
+                )}
+                {!todoList.length && !error && (
+                    <EmptyTaskList />
                 )}
                 {!!error && (
                     <ServerError message={error} />
