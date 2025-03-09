@@ -1,9 +1,13 @@
 import { createRoot } from 'react-dom/client'
+import { Provider } from "react-redux";
 
-import MainSection from './app/components/MainSection'
+import store from './features/store.js'
+import Layout from './app/Layouts/Layout.jsx'
+
+import './globals.css'
 
 createRoot(document.getElementById('root')).render(
-    <main className="container">
-        <MainSection />
-    </main>
+    <Provider store={store}>
+        <Layout />
+    </Provider>
 )
