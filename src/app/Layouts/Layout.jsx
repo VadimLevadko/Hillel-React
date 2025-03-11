@@ -4,7 +4,8 @@ import { useDispatch } from "react-redux";
 import { getAllProducts } from "@features/Products/products-slice.js";
 
 import Header from "@components/Header"
-import MainPageLayout from "./MainPageLayout.jsx"
+import ProductsSection from "@features/Products";
+import Filter from "@features/Filter"
 import SingleProduct from "@features/Products/SingleProduct.jsx";
 import Cart from "@features/Cart"
 import CheckoutPage from "@components/CheckoutPage/index.js";
@@ -21,11 +22,12 @@ export default function Layout() {
         <BrowserRouter>
             <Header />
             <Routes>
-                <Route path="/" element={<MainPageLayout />} />
+                <Route path="/" element={<ProductsSection />} />
                 <Route path="product-details/:id" element={<SingleProduct />} />
                 <Route path="cart" element={<Cart />} />
                 <Route path="checkout" element={<CheckoutPage />} />
             </Routes>
+            <Filter />
             <Footer />
         </BrowserRouter>
     )

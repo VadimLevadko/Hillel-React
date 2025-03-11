@@ -5,17 +5,18 @@ import {
     setFilter,
     setPrice,
     clearFilter,
-    selectIsVisible
+    selectIsVisible,
+    toggleVisibility
 } from "@features/Filter/filter-slice.jsx";
 import { getAllCategories } from "@utils/filtersUtils.js"
 
-import { Box, Typography, List, ListItem, Radio, RadioGroup , TextField, Button } from "@mui/material"
+import {Box, Typography, List, ListItem, Radio, RadioGroup, TextField, Button, IconButton} from "@mui/material"
 import Footer from "@components/Footer"
 
 import CategoryIcon from "@mui/icons-material/Category";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import {Link} from "react-router";
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function Filter() {
     const dispatch = useDispatch();
@@ -51,63 +52,72 @@ export default function Filter() {
         }))
     }
 
+    const handleToggleMenu = () => {
+        return dispatch(toggleVisibility())
+    }
+
     return (
-        <aside className={`max-w-[240px] w-full h-[100vh] bg-[#2d2d2d] base-animation shadow fixed z-[1] ${!isVisible ? "translate-x-[-100%]" : "translate-x-0"}`}>
-            <Box sx={{ color: "white", p: 3 }}>
-                <Typography variant="h5" fontWeight="bold" sx={{ mb: 2 }}>Filters</Typography>
-                <Box sx={{ mb: 1 }}>
-                    <Typography variant="subtitle1" sx={{ display: "flex", alignItems: "center" }}>
-                        <CategoryIcon sx={{ mr: 1, color: "orange" }} /> Categories
-                    </Typography>
-                    <List>
-                        <RadioGroup>
-                            {!!allCategories.length && allCategories.map((category, i) => {
-                                return (
-                                    <ListItem onChange={handleSetFilter} sx={{ p: 0, textTransform: "capitalize", fontSize: 14 }} key={i}>
-                                        <Radio checked={currentCategory === category} value={category}
-                                               sx={{
-                                                   color: "orange",
-                                                   '&.Mui-checked': {
+        <aside className={`max-w-[240px] w-full h-[100vh] bg-[#2d2d2d] base-animation shadow fixed bottom-0 left-0 z-[1] ${!isVisible ? "translate-x-[-100%]" : "translate-x-0"}`}>
+            <Box sx={{ position: "relative" }}>
+                <IconButton onClick={handleToggleMenu} sx={{ position: "absolute", top: 10, right: 10, color: "#FFF" }}>
+                    <CloseIcon />
+                </IconButton>
+                <Box sx={{ color: "white", p: 3 }}>
+                    <Typography variant="h5" fontWeight="bold" sx={{ mb: 2 }}>Filters</Typography>
+                    <Box sx={{ mb: 1 }}>
+                        <Typography variant="subtitle1" sx={{ display: "flex", alignItems: "center" }}>
+                            <CategoryIcon sx={{ mr: 1, color: "orange" }} /> Categories
+                        </Typography>
+                        <List>
+                            <RadioGroup>
+                                {!!allCategories.length && allCategories.map((category, i) => {
+                                    return (
+                                        <ListItem onChange={handleSetFilter} sx={{ p: 0, textTransform: "capitalize", fontSize: 14 }} key={i}>
+                                            <Radio checked={currentCategory === category} value={category}
+                                                   sx={{
                                                        color: "orange",
-                                                   },
-                                               }} />
-                                        {category}
-                                    </ListItem>
-                                )
-                            })}
-                        </RadioGroup>
-                    </List>
-                </Box>
-                <Box>
-                    <Typography variant="subtitle1" sx={{ display: "flex" }}>
-                        <AttachMoneyIcon sx={{ mr: 1, color: "orange" }} /> Price range
-                    </Typography>
-                    <Box sx={{ mb: 1, }}>
-                        <TextField
-                            data-min-price
-                            onChange={(event) => setCurrentPrice({...currentPrice, min: Number(event.target.value)})}
-                            type="text"
-                            variant="outlined"
-                            size="small"
-                            value={currentPrice.min}
-                            sx={{ bgcolor: "white", borderRadius: 1, mb: 1 }} />
-                        <TextField
-                            data-max-price
-                            onChange={(event) => setCurrentPrice({...currentPrice, max: Number(event.target.value)})}
-                            type="text"
-                            variant="outlined"
-                            size="small"
-                            value={currentPrice.max}
-                            sx={{ bgcolor: "white", borderRadius: 1 }} />
+                                                       '&.Mui-checked': {
+                                                           color: "orange",
+                                                       },
+                                                   }} />
+                                            {category}
+                                        </ListItem>
+                                    )
+                                })}
+                            </RadioGroup>
+                        </List>
                     </Box>
-                    <Button onClick={handleApplyPriceFilter} variant="contained" color="warning" sx={{ width: "100%", mb: 3, }}>Apply</Button>
-                    <hr/>
-                    <Button onClick={handleClear} variant="contained" color="secondary" sx={{ width: "100%", display: "flex", alignItems: "center", gap: 1, mt: 3, }}>
-                        <RestartAltIcon /> Clear filter
-                    </Button>
+                    <Box>
+                        <Typography variant="subtitle1" sx={{ display: "flex" }}>
+                            <AttachMoneyIcon sx={{ mr: 1, color: "orange" }} /> Price range
+                        </Typography>
+                        <Box sx={{ mb: 1, }}>
+                            <TextField
+                                data-min-price
+                                onChange={(event) => setCurrentPrice({...currentPrice, min: Number(event.target.value)})}
+                                type="text"
+                                variant="outlined"
+                                size="small"
+                                value={currentPrice.min}
+                                sx={{ bgcolor: "white", borderRadius: 1, mb: 1 }} />
+                            <TextField
+                                data-max-price
+                                onChange={(event) => setCurrentPrice({...currentPrice, max: Number(event.target.value)})}
+                                type="text"
+                                variant="outlined"
+                                size="small"
+                                value={currentPrice.max}
+                                sx={{ bgcolor: "white", borderRadius: 1 }} />
+                        </Box>
+                        <Button onClick={handleApplyPriceFilter} variant="contained" color="warning" sx={{ width: "100%", mb: 3, }}>Apply</Button>
+                        <hr/>
+                        <Button onClick={handleClear} variant="contained" color="secondary" sx={{ width: "100%", display: "flex", alignItems: "center", gap: 1, mt: 3, }}>
+                            <RestartAltIcon /> Clear filter
+                        </Button>
+                    </Box>
                 </Box>
+                <Footer />
             </Box>
-            <Footer />
         </aside>
     );
 }
