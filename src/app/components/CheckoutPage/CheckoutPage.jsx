@@ -113,10 +113,10 @@ export default function CheckoutPage() {
                     maxHeight: "fit-content"
                 }}>
                     {cart.products.map((el) => {
-                        const {image, title, count, price} = el || {};
+                        const { id, image, title, count, price } = el || {};
 
                         return (
-                            <Box sx={{display: "flex",}}>
+                            <Box sx={{display: "flex"}} key={id}>
                                 <CardMedia
                                     component="img"
                                     image={image}

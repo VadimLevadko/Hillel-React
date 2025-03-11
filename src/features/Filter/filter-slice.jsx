@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { selectAllProducts } from "../Products/products-slice.js"
 
 const filterSlice = createSlice({
     name: "filter",
@@ -37,14 +38,18 @@ export const {
     toggleVisibility
 } = filterSlice.actions;
 
+const selectFilter = (state) => state.filter;
 export const selectCurrentPrice = (state) => state.filter.price;
 export const selectCurrentCategory = (state) => state.filter.category;
 export const selectIsVisible = (state) => state.filter.isVisible;
 
-export const selectVisibleProducts = (state) => {
-    if(state.filter.category === "all") {
-        return state.products.products.filter(el => Number(el.price) >= state.filter.price.min && Number(el.price) <= state.filter.price.max)
-    }
+export const selectVisibleProducts = createSelector(
+    [selectAllProducts, selectFilter],
+    (products, filter) => {
+        if(filter.category === "all") {
+            return products.products.filter(el => Number(el.price) >= filter.price.min && Number(el.price) <= filter.price.max)
+        }
 
-    return state.products.products.filter(el => el.category === state.filter.category && Number(el.price) >= state.filter.price.min && Number(el.price) <= state.filter.price.max);
-}
+        return products.products.filter(el => el.category === filter.category && Number(el.price) >= filter.price.min && Number(el.price) <= filter.price.max);
+    }
+)

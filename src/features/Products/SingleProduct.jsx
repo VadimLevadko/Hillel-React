@@ -49,7 +49,7 @@ export default function SingleProduct() {
                     <Button variant="contained" color="warning" startIcon={<ArrowBackIosIcon />} sx={{ mb: 1 }}>Return back</Button>
                 </Link>
                 <Card sx={{ borderRadius: "16px", boxShadow: 6, bgcolor: "#2d2d2d", color: "white" }}>
-                    <Box container sx={{ display: "flex" }}>
+                    <Box sx={{ display: "flex" }}>
                         <Box sx={{ backgroundColor: "#FFF", display: "flex", alignItems: "center", justifyContent: "center", maxWidth: "40%", width: "100%", p: 3 }}>
                             <CardMedia component="img" image={product.image} alt={product.title} sx={{ maxHeight: 400, objectFit: "contain" }} />
                         </Box>
@@ -80,7 +80,7 @@ export default function SingleProduct() {
                 >
                     {products.filter(el => el.category === product.category && el.id !== product.id).map(item => {
                         return (
-                            <SwiperSlide>
+                            <SwiperSlide key={item.id}>
                                 <ProductItem content={item} key={item.id} />
                             </SwiperSlide>
                         )
