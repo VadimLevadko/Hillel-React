@@ -1,0 +1,11 @@
+.swiper-container {
+  .swiper-wrapper {
+    margin-bottom: 20px;
+    margin-top: 10px;
+
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

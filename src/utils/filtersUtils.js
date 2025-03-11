@@ -18,6 +18,8 @@ export const getAllCategories = () => {
 export const getMinAndMaxPrice = () => {
     const items = useSelector(selectAllProducts);
 
+    if(!items.products.length) return;
+
     const arrItems = items.products.reduce((acc, item) => {
         acc.push(Number(item.price));
         return acc;

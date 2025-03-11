@@ -1,37 +1,33 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { selectCurrentCategory, setFilter, setPrice, clearFilter } from "@features/Filter/filter-slice.jsx";
-import { getAllCategories, getMinAndMaxPrice } from "@utils/filtersUtils.js"
+import { useState } from "react";
+import {
+    selectCurrentCategory,
+    setFilter,
+    setPrice,
+    clearFilter,
+    selectIsVisible
+} from "@features/Filter/filter-slice.jsx";
+import { getAllCategories } from "@utils/filtersUtils.js"
 
 import { Box, Typography, List, ListItem, Radio, RadioGroup , TextField, Button } from "@mui/material"
+import Footer from "@components/Footer"
 
 import CategoryIcon from "@mui/icons-material/Category";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import {Link} from "react-router";
 
 export default function Filter() {
     const dispatch = useDispatch();
 
     const [currentPrice, setCurrentPrice] = useState({
         min: 0,
-        max: 0
+        max: 1000,
     })
 
     const allCategories = getAllCategories();
     const currentCategory = useSelector(selectCurrentCategory)
-    const { min, max } = getMinAndMaxPrice();
-
-    useEffect(() => {
-        setCurrentPrice({
-            min: !isFinite(min) ? 0 : min,
-            max: !isFinite(max) ? 0 : max,
-        })
-
-        dispatch(setPrice({
-            min: !isFinite(min) ? 0 : min,
-            max: !isFinite(max) ? 0 : max,
-        }))
-    }, [min, max])
+    const isVisible = useSelector(selectIsVisible);
 
     const handleSetFilter = (event) => {
         dispatch(setFilter(event.target.value));
@@ -39,8 +35,8 @@ export default function Filter() {
 
     const handleClear = () => {
         setCurrentPrice({
-            min: min,
-            max: max,
+            min: 0,
+            max: 1000,
         })
 
         dispatch(clearFilter());
@@ -56,7 +52,7 @@ export default function Filter() {
     }
 
     return (
-        <aside className="max-w-[240px] w-full h-[100vh] bg-[#2d2d2d] shadow">
+        <aside className={`max-w-[240px] w-full h-[100vh] bg-[#2d2d2d] base-animation shadow fixed z-[1] ${!isVisible ? "translate-x-[-100%]" : "translate-x-0"}`}>
             <Box sx={{ color: "white", p: 3 }}>
                 <Typography variant="h5" fontWeight="bold" sx={{ mb: 2 }}>Filters</Typography>
                 <Box sx={{ mb: 1 }}>
@@ -72,7 +68,7 @@ export default function Filter() {
                                                sx={{
                                                    color: "orange",
                                                    '&.Mui-checked': {
-                                                        color: "green",
+                                                       color: "orange",
                                                    },
                                                }} />
                                         {category}
@@ -111,6 +107,7 @@ export default function Filter() {
                     </Button>
                 </Box>
             </Box>
+            <Footer />
         </aside>
     );
 }

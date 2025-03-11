@@ -1,17 +1,32 @@
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { addProductCart, selectCart } from "@features/Cart/cart-slice.js"
 
 import { Card, CardContent, CardMedia, Typography, CardActions, Button, Rating, Box, IconButton } from "@mui/material";
 
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import BeenhereIcon from '@mui/icons-material/Beenhere';
 
 export default function ProductItem({ content }) {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const { id, title, description, price, rating, image } = content || {};
+    const cart = useSelector(selectCart)
+    const isProductDeclared = cart.usedId.includes(id);
 
     const handleClick = () => {
-        return navigate(`product-details/${id}`);
+        return navigate(`/product-details/${id}`, { replace: true });
+    }
+    const handleNavigateToCart = (event) => {
+        event.stopPropagation();
+        navigate("/cart");
+    }
+    const handleAddToCart = (event) => {
+        event.stopPropagation();
+
+        return dispatch(addProductCart(content));
     }
 
     return (
@@ -54,13 +69,15 @@ export default function ProductItem({ content }) {
                     <FavoriteBorderIcon />
                 </IconButton>
                 <Button
+                    onClick={isProductDeclared ? handleNavigateToCart : handleAddToCart}
                     sx={{
                         bgcolor: "#D95D39",
                         color: "white",
                         '&:hover': { bgcolor: "#B84327" }
                     }}
                     variant="contained"
-                    startIcon={<ShoppingCartIcon />}>
+                    startIcon={isProductDeclared ? <BeenhereIcon /> : <ShoppingCartIcon /> }
+                >
                     Buy Now
                 </Button>
             </CardActions>
